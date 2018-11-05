@@ -21,7 +21,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 
-entity RegFile_ARM is
+entity Register_File is
 	Generic (addr_size : natural := 4;
 				data_size : natural := 32 );
     Port(clk : in STD_LOGIC;
@@ -33,9 +33,9 @@ entity RegFile_ARM is
 		   WE3 : in STD_LOGIC;
 		   RD1 : out STD_LOGIC_VECTOR(data_size-1 downto 0);
 		   RD2 : out STD_LOGIC_VECTOR(data_size-1 downto 0)); -- RD1 and RD2 provide operands/data
-end RegFile_ARM;
+end Register_File;
 
-architecture Behavioral of RegFile_ARM is
+architecture Behavioral of Register_File is
 	type RegFile_type is array (0 to 2**addr_size-1) of
 		std_logic_vector (data_size-1 downto 0);
 	signal RegFile : RegFile_type := (others=> (others=>'0'));
