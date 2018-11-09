@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-11-05T18:52:20</DateModified>
+  <DateModified>2018-11-05T20:07:57</DateModified>
   <ModuleName>TopLevel</ModuleName>
-  <SummaryTimeStamp>2018-11-05T18:48:52</SummaryTimeStamp>
+  <SummaryTimeStamp>2018-11-05T19:07:51</SummaryTimeStamp>
   <SavedFilePath>/home/ise/Xilinx/DSD_Project/SingleCycle/iseconfig/TopLevel.xreport</SavedFilePath>
   <ImplementationReportsDirectory>/home/ise/Xilinx/DSD_Project/SingleCycle/</ImplementationReportsDirectory>
   <DateInitialized>2018-11-05T18:25:32</DateInitialized>

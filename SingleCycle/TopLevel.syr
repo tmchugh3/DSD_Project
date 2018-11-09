@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.07 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.07 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Reading design: TopLevel.prj
@@ -176,6 +176,7 @@ Elaborating entity <Register_File> (architecture <Behavioral>) with generics fro
 Elaborating entity <ALU> (architecture <Behavioral>) with generics from library <work>.
 
 Elaborating entity <Instruction_Memory> (architecture <Behavioral>) with generics from library <work>.
+WARNING:HDLCompiler:746 - "/home/ise/Xilinx/DSD_Project/SingleCycle/Instruction_Memory.vhd" Line 60: Range is empty (null range)
 
 Elaborating entity <Data_Memory> (architecture <Behavioral>) with generics from library <work>.
 WARNING:Xst:2972 - "/home/ise/Xilinx/DSD_Project/SingleCycle/TopLevel_Single_Cycle.vhd" line 144. All outputs of instance <Inst_debounce> of block <debounce> are unconnected in block <TopLevel>. Underlying logic will be removed.
@@ -278,8 +279,9 @@ Synthesizing Unit <Instruction_Memory>.
     Related source file is "/home/ise/Xilinx/DSD_Project/SingleCycle/Instruction_Memory.vhd".
         data_width = 32
         addr_width = 9
+    Found 512x32-bit Read Only RAM for signal <RD>
     Summary:
-	no macro.
+	inferred   1 RAM(s).
 Unit <Instruction_Memory> synthesized.
 
 Synthesizing Unit <Data_Memory>.
@@ -295,11 +297,12 @@ Unit <Data_Memory> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# RAMs                                                 : 6
+# RAMs                                                 : 7
  16x10-bit single-port Read Only RAM                   : 1
  16x32-bit dual-port RAM                               : 2
  16x4-bit single-port Read Only RAM                    : 1
  512x32-bit single-port RAM                            : 1
+ 512x32-bit single-port Read Only RAM                  : 1
  64x4-bit single-port Read Only RAM                    : 1
 # Adders/Subtractors                                   : 5
  11-bit adder                                          : 1
@@ -328,10 +331,6 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
-WARNING:Xst:1290 - Hierarchical block <i_arm> is unconnected in block <TopLevel>.
-   It will be removed from the design.
-WARNING:Xst:1290 - Hierarchical block <i_dmem> is unconnected in block <TopLevel>.
-   It will be removed from the design.
 
 Synthesizing (advanced) Unit <Data_Memory>.
 INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_Data_Mem> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
@@ -423,14 +422,33 @@ INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_RegFile1> will be implemented on LUT
     -----------------------------------------------------------------------
 Unit <Register_File> synthesized (advanced).
 
+Synthesizing (advanced) Unit <TopLevel>.
+INFO:Xst:3226 - The RAM <i_imem/Mram_RD> will be implemented as a BLOCK RAM, absorbing the following register(s): <i_arm/Inst_datapath/PCsig>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 512-word x 32-bit                   |          |
+    |     mode           | write-first                         |          |
+    |     clkA           | connected to signal <Clk>           | rise     |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <i_arm/Inst_datapath/PCmux<10:2>> |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to signal <Instr>         |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+Unit <TopLevel> synthesized (advanced).
+
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# RAMs                                                 : 6
+# RAMs                                                 : 7
  16x10-bit single-port distributed Read Only RAM       : 1
  16x32-bit dual-port distributed RAM                   : 2
  16x4-bit single-port distributed Read Only RAM        : 1
+ 512x32-bit single-port block Read Only RAM            : 1
  512x32-bit single-port distributed RAM                : 1
  64x4-bit single-port distributed Read Only RAM        : 1
 # Adders/Subtractors                                   : 4
@@ -456,21 +474,16 @@ Macro Statistics
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-WARNING:Xst:2973 - All outputs of instance <i_arm/Inst_datapath> of block <datapath> are unconnected in block <TopLevel>. Underlying logic will be removed.
-WARNING:Xst:2973 - All outputs of instance <i_arm/Inst_controller/Inst_Cond_Logic> of block <Cond_Logic> are unconnected in block <TopLevel>. Underlying logic will be removed.
-WARNING:Xst:2677 - Node <Flags_0> of sequential type is unconnected in block <Cond_Logic>.
-WARNING:Xst:2677 - Node <Flags_1> of sequential type is unconnected in block <Cond_Logic>.
-WARNING:Xst:2677 - Node <Flags_3> of sequential type is unconnected in block <Cond_Logic>.
 
 Optimizing unit <TopLevel> ...
 
-Optimizing unit <datapath> ...
-
 Optimizing unit <ALU> ...
+
+Optimizing unit <Cond_Logic> ...
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block TopLevel, actual ratio is 0.
+Found area constraint ratio of 100 (+ 5) on block TopLevel, actual ratio is 7.
 
 Final Macro Processing ...
 
@@ -478,8 +491,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 11
- Flip-Flops                                            : 11
+# Registers                                            : 47
+ Flip-Flops                                            : 47
 
 =========================================================================
 
@@ -502,19 +515,33 @@ Top Level Output File Name         : TopLevel.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 38
+# BELS                             : 742
 #      GND                         : 1
-#      INV                         : 1
-#      LUT1                        : 10
-#      LUT4                        : 4
-#      MUXCY                       : 10
+#      INV                         : 4
+#      LUT1                        : 67
+#      LUT2                        : 10
+#      LUT3                        : 37
+#      LUT4                        : 15
+#      LUT5                        : 125
+#      LUT6                        : 203
+#      MUXCY                       : 132
+#      MUXF7                       : 11
 #      VCC                         : 1
-#      XORCY                       : 11
-# FlipFlops/Latches                : 11
+#      XORCY                       : 136
+# FlipFlops/Latches                : 48
 #      FD                          : 11
+#      FDR                         : 32
+#      FDRE                        : 4
+#      LD                          : 1
+# RAMS                             : 79
+#      RAM16X1D                    : 4
+#      RAM256X1S                   : 64
+#      RAM32M                      : 10
+#      RAMB16BWER                  : 1
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 21
+# IO Buffers                       : 22
+#      IBUF                        : 1
 #      OBUF                        : 21
 
 Device utilization summary:
@@ -524,22 +551,26 @@ Selected Device : 6slx9tqg144-2
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              11  out of  11440     0%  
- Number of Slice LUTs:                   15  out of   5720     0%  
-    Number used as Logic:                15  out of   5720     0%  
+ Number of Slice Registers:              48  out of  11440     0%  
+ Number of Slice LUTs:                  765  out of   5720    13%  
+    Number used as Logic:               461  out of   5720     8%  
+    Number used as Memory:              304  out of   1440    21%  
+       Number used as RAM:              304
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:     15
-   Number with an unused Flip Flop:       4  out of     15    26%  
-   Number with an unused LUT:             0  out of     15     0%  
-   Number of fully used LUT-FF pairs:    11  out of     15    73%  
-   Number of unique control sets:         1
+ Number of LUT Flip Flop pairs used:    765
+   Number with an unused Flip Flop:     717  out of    765    93%  
+   Number with an unused LUT:             0  out of    765     0%  
+   Number of fully used LUT-FF pairs:    48  out of    765     6%  
+   Number of unique control sets:         5
 
 IO Utilization: 
  Number of IOs:                          34
- Number of bonded IOBs:                  22  out of    102    21%  
+ Number of bonded IOBs:                  23  out of    102    22%  
 
 Specific Feature Utilization:
+ Number of Block RAM/FIFO:                1  out of     32     3%  
+    Number using Block RAM only:          1
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
 
 ---------------------------
@@ -560,11 +591,16 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
------------------------------------+------------------------+-------+
-Clock Signal                       | Clock buffer(FF name)  | Load  |
------------------------------------+------------------------+-------+
-Clk                                | BUFGP                  | 11    |
------------------------------------+------------------------+-------+
+------------------------------------------------------------------------+--------------------------------------------------+-------+
+Clock Signal                                                            | Clock buffer(FF name)                            | Load  |
+------------------------------------------------------------------------+--------------------------------------------------+-------+
+Clk                                                                     | BUFGP                                            | 126   |
+i_arm/ALUControl<1>(i_arm/Inst_controller/Inst_Decoder/Mram__n0093111:O)| NONE(*)(i_arm/Inst_datapath/Inst_ALU/result_9_32)| 1     |
+------------------------------------------------------------------------+--------------------------------------------------+-------+
+(*) This 1 clock signal(s) are generated by combinatorial logic,
+and XST is not able to identify which are the primary clock signals.
+Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
 Asynchronous Control Signals Information:
 ----------------------------------------
@@ -574,9 +610,9 @@ Timing Summary:
 ---------------
 Speed Grade: -2
 
-   Minimum period: 2.165ns (Maximum Frequency: 461.840MHz)
-   Minimum input arrival time before clock: No path found
-   Maximum output required time after clock: 5.489ns
+   Minimum period: 11.892ns (Maximum Frequency: 84.090MHz)
+   Minimum input arrival time before clock: 4.855ns
+   Maximum output required time after clock: 7.392ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -585,56 +621,79 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'Clk'
-  Clock period: 2.165ns (frequency: 461.840MHz)
-  Total number of paths / destination ports: 66 / 11
+  Clock period: 11.892ns (frequency: 84.090MHz)
+  Total number of paths / destination ports: 2011331 / 850
 -------------------------------------------------------------------------
-Delay:               2.165ns (Levels of Logic = 12)
-  Source:            HEXon7segDisp1/Counter_0 (FF)
-  Destination:       HEXon7segDisp1/Counter_10 (FF)
+Delay:               11.892ns (Levels of Logic = 16)
+  Source:            i_imem/Mram_RD (RAM)
+  Destination:       i_imem/Mram_RD (RAM)
   Source Clock:      Clk rising
   Destination Clock: Clk rising
 
-  Data Path: HEXon7segDisp1/Counter_0 to HEXon7segDisp1/Counter_10
+  Data Path: i_imem/Mram_RD to i_imem/Mram_RD
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               1   0.525   0.681  HEXon7segDisp1/Counter_0 (HEXon7segDisp1/Counter_0)
-     INV:I->O              1   0.255   0.000  HEXon7segDisp1/Mcount_Counter_lut<0>_INV_0 (HEXon7segDisp1/Mcount_Counter_lut<0>)
-     MUXCY:S->O            1   0.215   0.000  HEXon7segDisp1/Mcount_Counter_cy<0> (HEXon7segDisp1/Mcount_Counter_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<1> (HEXon7segDisp1/Mcount_Counter_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<2> (HEXon7segDisp1/Mcount_Counter_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<3> (HEXon7segDisp1/Mcount_Counter_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<4> (HEXon7segDisp1/Mcount_Counter_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<5> (HEXon7segDisp1/Mcount_Counter_cy<5>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<6> (HEXon7segDisp1/Mcount_Counter_cy<6>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<7> (HEXon7segDisp1/Mcount_Counter_cy<7>)
-     MUXCY:CI->O           1   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<8> (HEXon7segDisp1/Mcount_Counter_cy<8>)
-     MUXCY:CI->O           0   0.023   0.000  HEXon7segDisp1/Mcount_Counter_cy<9> (HEXon7segDisp1/Mcount_Counter_cy<9>)
-     XORCY:CI->O           1   0.206   0.000  HEXon7segDisp1/Mcount_Counter_xor<10> (Result<10>)
-     FD:D                      0.074          HEXon7segDisp1/Counter_10
+     RAMB16BWER:CLKA->DOA27  167   2.100   2.381  i_imem/Mram_RD (LED_7_OBUF)
+     LUT3:I2->O            9   0.254   0.976  i_arm/Inst_datapath/Inst_Register_File/PWR_13_o_A2[3]_equal_5_o<3>_SW1_1 (i_arm/Inst_datapath/Inst_Register_File/PWR_13_o_A2[3]_equal_5_o<3>_SW1)
+     LUT6:I5->O            5   0.254   0.841  i_arm/Inst_datapath/Inst_Register_File/Mmux_RD211 (WriteData<0>)
+     LUT6:I5->O            1   0.254   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_lut<0> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_lut<0>)
+     MUXCY:S->O            1   0.215   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<0> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<0>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<1> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<1>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<2> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<2>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<3> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<3>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<4> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<4>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<5> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<5>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<6> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<6>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<7> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<7>)
+     MUXCY:CI->O           1   0.023   0.000  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<8> (i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_cy<8>)
+     XORCY:CI->O           3   0.206   0.874  i_arm/Inst_datapath/Inst_ALU/Madd_GND_32_o_GND_32_o_add_0_OUT_xor<9> (i_arm/Inst_datapath/Inst_ALU/GND_32_o_GND_32_o_add_0_OUT<9>)
+     LUT6:I4->O            2   0.250   0.726  i_arm/Inst_datapath/Inst_ALU/Mmux_result_9321_1 (i_arm/Inst_datapath/Inst_ALU/Mmux_result_9321)
+     LUT5:I4->O            1   0.254   0.790  i_arm/Inst_datapath/Mmux_Result321_SW1 (N107)
+     LUT6:I4->O            1   0.250   0.681  i_arm/Inst_datapath/PCmux<9>1 (i_arm/Inst_datapath/PCmux<9>_0)
+     RAMB16BWER:ADDRA12        0.400          i_imem/Mram_RD
     ----------------------------------------
-    Total                      2.165ns (1.484ns logic, 0.681ns route)
-                                       (68.5% logic, 31.5% route)
+    Total                     11.892ns (4.623ns logic, 7.269ns route)
+                                       (38.9% logic, 61.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'Clk'
+  Total number of paths / destination ports: 45 / 45
+-------------------------------------------------------------------------
+Offset:              4.855ns (Levels of Logic = 2)
+  Source:            DIR_LEFT (PAD)
+  Destination:       i_imem/Mram_RD (RAM)
+  Destination Clock: Clk rising
+
+  Data Path: DIR_LEFT to i_imem/Mram_RD
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            45   1.328   2.192  DIR_LEFT_IBUF (DIR_LEFT_IBUF)
+     LUT6:I0->O            1   0.254   0.681  i_arm/Inst_datapath/PCmux<2>1 (i_arm/Inst_datapath/PCmux<2>_0)
+     RAMB16BWER:ADDRA5         0.400          i_imem/Mram_RD
+    ----------------------------------------
+    Total                      4.855ns (1.982ns logic, 2.873ns route)
+                                       (40.8% logic, 59.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'Clk'
-  Total number of paths / destination ports: 16 / 4
+  Total number of paths / destination ports: 24 / 12
 -------------------------------------------------------------------------
-Offset:              5.489ns (Levels of Logic = 2)
-  Source:            HEXon7segDisp1/Counter_8 (FF)
-  Destination:       Seg7_AN<3> (PAD)
+Offset:              7.392ns (Levels of Logic = 1)
+  Source:            i_imem/Mram_RD (RAM)
+  Destination:       LED<7> (PAD)
   Source Clock:      Clk rising
 
-  Data Path: HEXon7segDisp1/Counter_8 to Seg7_AN<3>
+  Data Path: i_imem/Mram_RD to LED<7>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               5   0.525   1.117  HEXon7segDisp1/Counter_8 (HEXon7segDisp1/Counter_8)
-     LUT4:I0->O            1   0.254   0.681  HEXon7segDisp1/Mram_an_out31 (Seg7_AN_3_OBUF)
-     OBUF:I->O                 2.912          Seg7_AN_3_OBUF (Seg7_AN<3>)
+     RAMB16BWER:CLKA->DOA27  167   2.100   2.380  i_imem/Mram_RD (LED_7_OBUF)
+     OBUF:I->O                 2.912          LED_7_OBUF (LED<7>)
     ----------------------------------------
-    Total                      5.489ns (3.691ns logic, 1.798ns route)
-                                       (67.2% logic, 32.8% route)
+    Total                      7.392ns (5.012ns logic, 2.380ns route)
+                                       (67.8% logic, 32.2% route)
 
 =========================================================================
 
@@ -642,25 +701,34 @@ Cross Clock Domains Report:
 --------------------------
 
 Clock to Setup on destination clock Clk
+-------------------+---------+---------+---------+---------+
+                   | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock       |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-------------------+---------+---------+---------+---------+
+Clk                |   11.892|         |         |         |
+i_arm/ALUControl<1>|    1.591|         |         |         |
+-------------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock i_arm/ALUControl<1>
 ---------------+---------+---------+---------+---------+
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-Clk            |    2.165|         |         |         |
+Clk            |    9.675|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 37.00 secs
-Total CPU time to Xst completion: 29.34 secs
+Total REAL time to Xst completion: 22.00 secs
+Total CPU time to Xst completion: 19.40 secs
  
 --> 
 
 
-Total memory usage is 488728 kilobytes
+Total memory usage is 391412 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   17 (   0 filtered)
-Number of infos    :    7 (   0 filtered)
+Number of warnings :   11 (   0 filtered)
+Number of infos    :    9 (   0 filtered)
 

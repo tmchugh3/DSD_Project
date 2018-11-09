@@ -22,6 +22,10 @@
   <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="SingleCycle.xise"/>
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Test_TopLevel_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="Test_TopLevel_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="Test_TopLevel_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Test_TopLevel_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="TopLevel.cmd_log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="TopLevel.lso"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGC" xil_pn:name="TopLevel.ngc"/>
@@ -34,11 +38,82 @@
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="TopLevel_summary.html"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="TopLevel_xst.xrpt"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/xst.xmsgs"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="fuse.log"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="isim.cmd"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_LOG" xil_pn:name="isim.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1541444610" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1541444610">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1541448965" xil_pn:in_ck="5829675535591432038" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1541448965">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ALU.vhd"/>
+      <outfile xil_pn:name="ARM.vhd"/>
+      <outfile xil_pn:name="Cond_Logic.vhd"/>
+      <outfile xil_pn:name="Controller.vhd"/>
+      <outfile xil_pn:name="Data_Memory.vhd"/>
+      <outfile xil_pn:name="Datapath.vhd"/>
+      <outfile xil_pn:name="Decoder.vhd"/>
+      <outfile xil_pn:name="HEXon7segDisp.vhd"/>
+      <outfile xil_pn:name="Instruction_Memory.vhd"/>
+      <outfile xil_pn:name="Register_File.vhd"/>
+      <outfile xil_pn:name="Test_TopLevel.vhd"/>
+      <outfile xil_pn:name="TopLevel_Single_Cycle.vhd"/>
+      <outfile xil_pn:name="debounce.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1541448923" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-3732667562620103936" xil_pn:start_ts="1541448923">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1541448923" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-5831990595682621570" xil_pn:start_ts="1541448923">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1541444610" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="5408065362263221083" xil_pn:start_ts="1541444610">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1541448965" xil_pn:in_ck="5829675535591432038" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1541448965">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ALU.vhd"/>
+      <outfile xil_pn:name="ARM.vhd"/>
+      <outfile xil_pn:name="Cond_Logic.vhd"/>
+      <outfile xil_pn:name="Controller.vhd"/>
+      <outfile xil_pn:name="Data_Memory.vhd"/>
+      <outfile xil_pn:name="Datapath.vhd"/>
+      <outfile xil_pn:name="Decoder.vhd"/>
+      <outfile xil_pn:name="HEXon7segDisp.vhd"/>
+      <outfile xil_pn:name="Instruction_Memory.vhd"/>
+      <outfile xil_pn:name="Register_File.vhd"/>
+      <outfile xil_pn:name="Test_TopLevel.vhd"/>
+      <outfile xil_pn:name="TopLevel_Single_Cycle.vhd"/>
+      <outfile xil_pn:name="debounce.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1541448973" xil_pn:in_ck="5829675535591432038" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-8518840764633579744" xil_pn:start_ts="1541448965">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="Test_TopLevel_beh.prj"/>
+      <outfile xil_pn:name="Test_TopLevel_isim_beh.exe"/>
+      <outfile xil_pn:name="fuse.log"/>
+      <outfile xil_pn:name="isim"/>
+      <outfile xil_pn:name="xilinxsim.ini"/>
+    </transform>
+    <transform xil_pn:end_ts="1541448973" xil_pn:in_ck="8364693547026616409" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="3851509640474771405" xil_pn:start_ts="1541448973">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="Test_TopLevel_isim_beh.wdb"/>
+      <outfile xil_pn:name="isim.cmd"/>
+      <outfile xil_pn:name="isim.log"/>
+    </transform>
     <transform xil_pn:end_ts="1541442813" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1541442813">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -67,7 +142,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1541443732" xil_pn:in_ck="6350659600543995756" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="5258233002801429236" xil_pn:start_ts="1541443684">
+    <transform xil_pn:end_ts="1541448897" xil_pn:in_ck="6350659600543995756" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="5258233002801429236" xil_pn:start_ts="1541448872">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>

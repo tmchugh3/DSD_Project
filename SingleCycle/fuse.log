@@ -1,0 +1,47 @@
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/ise/Xilinx/DSD_Project/SingleCycle/Test_TopLevel_isim_beh.exe -prj /home/ise/Xilinx/DSD_Project/SingleCycle/Test_TopLevel_beh.prj work.Test_TopLevel 
+ISim P.20160913 (signature 0xfbc00daa)
+Number of CPUs detected in this system: 1
+Turning on mult-threading, number of parallel sub-compilation jobs: 0 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Register_File.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Decoder.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Cond_Logic.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/ALU.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Datapath.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Controller.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Instruction_Memory.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/HEXon7segDisp.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/debounce.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Data_Memory.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/ARM.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/TopLevel_Single_Cycle.vhd" into library work
+Parsing VHDL file "/home/ise/Xilinx/DSD_Project/SingleCycle/Test_TopLevel.vhd" into library work
+Starting static elaboration
+WARNING:HDLCompiler:794 - "/home/ise/Xilinx/DSD_Project/SingleCycle/HEXon7segDisp.vhd" Line 87: Statement might not cover all choices ; 'others' clause recommended
+WARNING:HDLCompiler:746 - "/home/ise/Xilinx/DSD_Project/SingleCycle/Instruction_Memory.vhd" Line 60: Range is empty (null range)
+Completed static elaboration
+Fuse Memory Usage: 97852 KB
+Fuse CPU Usage: 1350 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package numeric_std
+Compiling package textio
+Compiling architecture behavioral of entity debounce [\debounce(3)\]
+Compiling architecture behavioral of entity HEXon7segDisp [hexon7segdisp_default]
+Compiling architecture behavioral of entity Decoder [decoder_default]
+Compiling architecture behavioral of entity Cond_Logic [cond_logic_default]
+Compiling architecture behavioral of entity controller [controller_default]
+Compiling architecture behavioral of entity Register_File [\Register_File(4,32)\]
+Compiling architecture behavioral of entity ALU [\ALU(32)\]
+Compiling architecture behavioral of entity datapath [datapath_default]
+Compiling architecture behavioral of entity ARM [arm_default]
+Compiling architecture behavioral of entity Instruction_Memory [\Instruction_Memory(32,9)\]
+Compiling architecture behavioral of entity Data_Memory [\Data_Memory(32,9)\]
+Compiling architecture behavioral of entity TopLevel [\TopLevel(3)\]
+Compiling architecture behavior of entity test_toplevel
+Time Resolution for simulation is 1ps.
+Compiled 29 VHDL Units
+Built simulation executable /home/ise/Xilinx/DSD_Project/SingleCycle/Test_TopLevel_isim_beh.exe
+Fuse Memory Usage: 114660 KB
+Fuse CPU Usage: 1660 ms
+GCC CPU Usage: 2670 ms

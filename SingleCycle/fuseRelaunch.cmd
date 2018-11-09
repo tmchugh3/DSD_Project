@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/ise/Xilinx/DSD_Project/SingleCycle/Test_TopLevel_isim_beh.exe" -prj "/home/ise/Xilinx/DSD_Project/SingleCycle/Test_TopLevel_beh.prj" "work.Test_TopLevel" 

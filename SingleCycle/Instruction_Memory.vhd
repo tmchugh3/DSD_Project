@@ -33,27 +33,57 @@ end Instruction_Memory;
 
 architecture Behavioral of Instruction_Memory is
 
-   -- Declare type for instruction ROM
+   -- Declare type for the memory
 	type instr_ROM_type is array(0 to 2**addr_width-1) 
 	     	   of bit_vector(data_width-1 downto 0); 
    
    -- Declare function for reading a file and returning 
-	-- a data array of the instruction memory contents
+	-- a data array of the initial memory contents with the program
 	impure function init_ROM (file_name : in string) 
 				return instr_ROM_type is  
                                                  
       FILE rom_file        : text is in file_name;                       
       variable instruction : line;                                 
-      variable instr_ROM   : instr_ROM_type;   
+      variable instr_ROM   : instr_ROM_type;
+		variable I     : natural;	
                                    
    begin 
       -- Loop for reading each line in the file
-		for I in instr_ROM_type'range loop                                  
+		-- until end of file is reached
+		-- Then, fill in remaining instr_ROMory with zeros
+		I := 0;
+		while not endfile(rom_file) loop
           readline (rom_file, instruction);                             
-          read (instruction, instr_ROM(I));                                  
-      end loop;  	
+          read (instruction, instr_ROM(I));
+			 I := I + 1;	
+      end loop;
+		for J in I to instr_ROM_type'left loop
+			 instr_ROM(J) := (others => '0');
+		end loop;
       return instr_ROM;                                            
    end function;                                                
+
+--   -- Declare type for instruction ROM
+--	type instr_ROM_type is array(0 to 2**addr_width-1) 
+--	     	   of bit_vector(data_width-1 downto 0); 
+--   
+--   -- Declare function for reading a file and returning 
+--	-- a data array of the instruction memory contents
+--	impure function init_ROM (file_name : in string) 
+--				return instr_ROM_type is  
+--                                                 
+--      FILE rom_file        : text is in file_name;                       
+--      variable instruction : line;                                 
+--      variable instr_ROM   : instr_ROM_type;   
+--                                   
+--   begin 
+--      -- Loop for reading each line in the file
+--		for I in instr_ROM_type'range loop                                  
+--          readline (rom_file, instruction);                             
+--          read (instruction, instr_ROM(I));                                  
+--      end loop;  	
+--      return instr_ROM;                                            
+--   end function;                                                
 
    -- Declare a constant for the instruction array read from the file
 	constant Instr_MEM : instr_ROM_type := init_ROM("program.txt");
